@@ -2,6 +2,8 @@
 
 A powerful and user-friendly **Scientific Calculator** built using HTML, CSS, and JavaScript. This app performs both basic and advanced mathematical calculations with a clean and responsive interface.
 
+---
+
 ## 🚀 Features
 
 * ➕ Basic Operations
@@ -23,6 +25,7 @@ A powerful and user-friendly **Scientific Calculator** built using HTML, CSS, an
 * 📱 Responsive Design
   Works smoothly on mobile, tablet, and desktop
 
+---
 
 ## 📁 Project Structure
 
@@ -30,6 +33,7 @@ Scientific-Calculator/
 ├── index.html
 └── README.md
 
+---
 
 ## 🛠️ Technologies Used
 
@@ -37,6 +41,7 @@ Scientific-Calculator/
 * CSS3
 * JavaScript (Vanilla JS)
 
+---
 
 ## ▶️ How to Run Locally
 
@@ -44,6 +49,7 @@ Scientific-Calculator/
 2. Open the project folder
 3. Double-click `index.html` or open it in your browser
 
+---
 
 ## 🔧 Git Commands to Upload Project
 
@@ -55,11 +61,15 @@ git remote add origin https://github.com/gk873131-boop/scientific-calculator.git
 git push -u origin main
 
 ---
+
 ## 🌐 Live Website (GitHub Pages)
+
+After enabling GitHub Pages in repository settings, your site will be available at:
+
 https://gk873131-boop.github.io/scientific-calculator
 
----
 
+---
 
 ## 💡 Future Improvements
 
@@ -68,5 +78,8 @@ https://gk873131-boop.github.io/scientific-calculator
 * History of calculations
 * Memory functions (M+, M-, MR)
 
+---
+
 
 If you found this project helpful, feel free to ⭐ the repository!
+
