@@ -54,17 +54,21 @@ Scientific-Calculator/
 ## 🔧 Git Commands to Upload Project
 
 git init
+
 git add .
+
 git commit -m "Initial commit - Scientific Calculator"
+
 git branch -M main
+
 git remote add origin https://github.com/gk873131-boop/scientific-calculator.git
+
 git push -u origin main
 
 ---
 
 ## 🌐 Live Website (GitHub Pages)
 
-After enabling GitHub Pages in repository settings, your site will be available at:
 
 https://gk873131-boop.github.io/scientific-calculator
 
