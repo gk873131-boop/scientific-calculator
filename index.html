@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scientific Calculator</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 360px 220px;
+            gap: 16px;
+        }
+
+        .calculator {
+            background: #1e1e2f;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .theme-toggle {
+            background: #2d2d44;
+            border: none;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #display {
+            width: 100%;
+            height: 55px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            text-align: right;
+            padding: 10px;
+            font-size: 22px;
+            background: #2d2d44;
+            color: #fff;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns:
+                repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        button {
+            height: 45px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .number {
+            background: #3a3a55;
+            color: white;
+        }
+
+        .operator {
+            background: #ff7a18;
+            color: white;
+        }
+
+        .equal {
+            background: #00c853;
+            color: white;
+            grid-column: span 2;
+        }
+
+        .clear {
+            background: #ff3d00;
+            color: white;
+        }
+
+        .func {
+            background: #6a1b9a;
+            color: white;
+        }
+
+        .memory {
+            background: #00897b;
+            color: white;
+        }
+
+        .history {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+
+        .history h3 {
+            margin-bottom: 10px;
+        }
+
+        .history-item {
+            padding: 6px;
+            border-bottom: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        body.light {
+            background: linear-gradient(135deg, #f6f9fc, #e9eff5);
+        }
+
+        body.light .calculator {
+            background: #fff;
+        }
+
+        body.light #display {
+            background: #f1f1f1;
+            color: #000;
+        }
+
+        body.light .number {
+            background: #e0e0e0;
+            color: #000;
+        }
+
+        @media (max-width: 750px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+
+        <div class="calculator">
+            <div class="header">
+                <span>Scientific Calculator</span>
+                <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+            </div>
+
+            <input type="text" id="display" readonly />
+
+            <div class="buttons">
+                <button class="clear" onclick="clearDisplay()">C</button>
+                <button class="func" onclick="append('Math.sqrt(')">√</button>
+                <button class="func" onclick="append('Math.sin(')">sin</button>
+                <button class="func" onclick="append('Math.cos(')">cos</button>
+                <button class="func" onclick="append('Math.tan(')">tan</button>
+
+                <button class="memory" onclick="memoryAdd()">M+</button>
+                <button class="memory" onclick="memorySub()">M-</button>
+                <button class="memory" onclick="memoryRecall()">MR</button>
+                <button class="memory" onclick="memoryClear()">MC</button>
+                <button class="operator" onclick="append('/')">÷</button>
+
+                <button class="number" onclick="append('7')">7</button>
+                <button class="number" onclick="append('8')">8</button>
+                <button class="number" onclick="append('9')">9</button>
+                <button class="operator" onclick="append('*')">×</button>
+                <button class="func" onclick="append('%')">%</button>
+
+                <button class="number" onclick="append('4')">4</button>
+                <button class="number" onclick="append('5')">5</button>
+                <button class="number" onclick="append('6')">6</button>
+                <button class="operator" onclick="append('-')">−</button>
+                <button class="equal" onclick="calculate()">=</button>
+
+                <button class="number" onclick="append('1')">1</button>
+                <button class="number" onclick="append('2')">2</button>
+                <button class="number" onclick="append('3')">3</button>
+                <button class="operator" onclick="append('+')">+</button>
+                <button class="number" onclick="append('.')">.</button>
+
+                <button class="number" onclick="append('0')">0</button>
+            </div>
+        </div>
+
+        <div class="history" id="history">
+            <h3>History</h3>
+            <div id="historyList"></div>
+            <button onclick="clearHistory()" style="margin-top:8px;">Clear History</button>
+        </div>
+
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        const historyList = document.getElementById('historyList');
+        let memory = 0;
+
+        function append(val) { display.value += val; }
+        function clearDisplay() { display.value = ''; }
+
+        function calculate() {
+            try {
+                const exp = display.value;
+                const result = eval(exp);
+                display.value = result;
+
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.textContent = `${exp} = ${result}`;
+                historyList.appendChild(div);
+            } catch { display.value = 'Error'; }
+        }
+
+        function clearHistory() { historyList.innerHTML = ''; }
+        function toggleTheme() { document.body.classList.toggle('light'); }
+
+
+        function memoryAdd() { memory += Number(display.value || 0); }
+        function memorySub() { memory -= Number(display.value || 0); }
+        function memoryRecall() { display.value = memory; }
+        function memoryClear() { memory = 0; }
+
+    </script>
+</body>
+
+</html>
